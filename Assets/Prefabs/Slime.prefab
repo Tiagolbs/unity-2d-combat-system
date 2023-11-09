@@ -277,6 +277,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 3
   knockBackThrust: 15
+  deathVFXPrefab: {fileID: 8560584665527339551, guid: 99c42808193c9044bbaa0ea9845a3273, type: 3}
 --- !u!114 &7607582516229400056
 MonoBehaviour:
   m_ObjectHideFlags: 0
