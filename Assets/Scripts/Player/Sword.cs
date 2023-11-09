@@ -7,6 +7,7 @@ public class Sword : MonoBehaviour
 {
     [SerializeField] private GameObject slashAnimationPrefab;
     [SerializeField] private Transform slashAnimationSpawnPoint;
+    [SerializeField] private Transform weaponCollider;
     
     private PlayerControls playerControls;
     private Animator myAnimator;
@@ -14,7 +15,7 @@ public class Sword : MonoBehaviour
     private ActiveWeapon activeWeapon;
     private GameObject slashAnimation;
     
-    private static readonly int Attack1 = Animator.StringToHash("Attack");
+    private static readonly int AttackAnimHash = Animator.StringToHash("Attack");
 
     private void Awake()
     {
@@ -39,15 +40,12 @@ public class Sword : MonoBehaviour
         MouseFollowWithOffset();
     }
 
-    private void Attack()
+    public void DoneAttackingAnimationEvent()
     {
-        myAnimator.SetTrigger(Attack1);
-
-        slashAnimation = Instantiate(slashAnimationPrefab, slashAnimationSpawnPoint.position, Quaternion.identity);
-        slashAnimation.transform.parent = this.transform.parent;
+        weaponCollider.gameObject.SetActive(false);
     }
 
-    public void SwingUpFlipAnimation()
+    public void SwingUpFlipAnimationEvent()
     {
         slashAnimation.gameObject.transform.rotation = Quaternion.Euler(-180, 0, 0);
 
@@ -57,7 +55,7 @@ public class Sword : MonoBehaviour
         }
     }
 
-    public void SwingDownFlipAnimation()
+    public void SwingDownFlipAnimationEvent()
     {
         slashAnimation.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
         
@@ -65,6 +63,14 @@ public class Sword : MonoBehaviour
         {
             slashAnimation.GetComponent<SpriteRenderer>().flipX = true;
         }    
+    }
+    
+    private void Attack()
+    {
+        myAnimator.SetTrigger(AttackAnimHash);
+        weaponCollider.gameObject.SetActive(true);
+        slashAnimation = Instantiate(slashAnimationPrefab, slashAnimationSpawnPoint.position, Quaternion.identity);
+        slashAnimation.transform.parent = this.transform.parent;
     }
 
     private void MouseFollowWithOffset()
@@ -77,10 +83,12 @@ public class Sword : MonoBehaviour
         if (mousePosition.x < playerScreenPoint.x)
         {
             activeWeapon.transform.rotation = Quaternion.Euler(0, -180, angle);
+            weaponCollider.transform.rotation = Quaternion.Euler(0, -180, 0);
         }
         else
         {
             activeWeapon.transform.rotation = Quaternion.Euler(0, 0, angle);
+            weaponCollider.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
     }
 }
