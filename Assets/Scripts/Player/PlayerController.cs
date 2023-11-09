@@ -14,16 +14,11 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D myRigidbody;
     private Animator myAnimator;
     private SpriteRenderer mySpriteRenderer;
-    private bool facingLeft = false;
 
     private static readonly int MoveX = Animator.StringToHash("moveX");
     private static readonly int MoveY = Animator.StringToHash("moveY");
     
-    public bool FacingLeft
-    {
-        get => facingLeft;
-        set => facingLeft = value;
-    }
+    public bool FacingLeft { get; private set; } = false;
 
     private void Awake()
     {
