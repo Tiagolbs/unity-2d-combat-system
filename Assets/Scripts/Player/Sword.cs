@@ -83,17 +83,15 @@ public class Sword : MonoBehaviour
     
     private void Attack()
     {
-        if (!attackButtonDown || isAttacking)
+        if (attackButtonDown && !isAttacking)
         {
-            return;
-        }
-        
-        isAttacking = true;
-        myAnimator.SetTrigger(AttackAnimHash);
-        weaponCollider.gameObject.SetActive(true);
-        slashAnimation = Instantiate(slashAnimationPrefab, slashAnimationSpawnPoint.position, Quaternion.identity);
-        slashAnimation.transform.parent = this.transform.parent;
-        StartCoroutine(AttackCooldownRoutine());
+            isAttacking = true;
+            myAnimator.SetTrigger(AttackAnimHash);
+            weaponCollider.gameObject.SetActive(true);
+            slashAnimation = Instantiate(slashAnimationPrefab, slashAnimationSpawnPoint.position, Quaternion.identity);
+            slashAnimation.transform.parent = this.transform.parent;
+            StartCoroutine(AttackCooldownRoutine());
+        } ;
     }
 
     private IEnumerator AttackCooldownRoutine()

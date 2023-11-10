@@ -6,6 +6,10 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 1f;
+    [SerializeField] private float dashSpeed = 4f;
+    [SerializeField] private float dashTime = 0.2f;
+    [SerializeField] private float dashCooldown = 2f;
+    [SerializeField] private TrailRenderer trailRenderer;
 
     public static PlayerController Instance;
 
@@ -14,6 +18,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D myRigidbody;
     private Animator myAnimator;
     private SpriteRenderer mySpriteRenderer;
+    private bool isDashing = false;
+    private float startingMoveSpeed;
 
     private static readonly int MoveX = Animator.StringToHash("moveX");
     private static readonly int MoveY = Animator.StringToHash("moveY");
@@ -27,6 +33,12 @@ public class PlayerController : MonoBehaviour
         myRigidbody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
         mySpriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    private void Start()
+    {
+        playerControls.Combat.Dash.performed += _ => Dash();
+        startingMoveSpeed = moveSpeed;
     }
 
     private void OnEnable()
@@ -51,7 +63,6 @@ public class PlayerController : MonoBehaviour
         
         myAnimator.SetFloat(MoveX, movement.x);
         myAnimator.SetFloat(MoveY, movement.y);
-
     }
 
     private void Move()
@@ -74,5 +85,27 @@ public class PlayerController : MonoBehaviour
             FacingLeft = false;
             mySpriteRenderer.flipX = false;
         }
+    }
+
+    private void Dash()
+    {
+        if (isDashing)
+        {
+            return;
+        }
+
+        isDashing = true;
+        moveSpeed *= dashSpeed;
+        trailRenderer.emitting = true;
+        StartCoroutine(EndDashRoutine());
+    }
+
+    private IEnumerator EndDashRoutine()
+    {
+        yield return new WaitForSeconds(dashTime);
+        moveSpeed = startingMoveSpeed;
+        trailRenderer.emitting = false;
+        yield return new WaitForSeconds(dashCooldown);
+        isDashing = false;
     }
 }
