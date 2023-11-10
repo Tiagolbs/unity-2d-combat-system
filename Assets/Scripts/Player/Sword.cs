@@ -78,7 +78,6 @@ public class Sword : MonoBehaviour
     private void StopAttacking()
     {
         attackButtonDown = false;
-        isAttacking = false;
     }
     
     private void Attack()
