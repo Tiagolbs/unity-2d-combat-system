@@ -1,38 +1,39 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Flash : MonoBehaviour
+namespace Misc
 {
-    [SerializeField] private Material whiteFlashMaterial;
-    [SerializeField] private float restoreDefaultMaterialTime = 0.2f;
-
-    private SpriteRenderer spriteRenderer;
-    private Material defaultMaterial;
-
-    private void Awake()
+    public class Flash : MonoBehaviour
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        defaultMaterial = spriteRenderer.material;
-    }
+        [SerializeField] private Material whiteFlashMaterial;
+        [SerializeField] private float restoreDefaultMaterialTime = 0.2f;
 
-    public float GetRestoreDefaultMaterialTime()
-    {
-        return restoreDefaultMaterialTime;
-    }
+        private SpriteRenderer spriteRenderer;
+        private Material defaultMaterial;
 
-    public void GetFlashEffect()
-    {
-        StartCoroutine(FlashRoutine());
-    }
+        private void Awake()
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            defaultMaterial = spriteRenderer.material;
+        }
 
-    private IEnumerator FlashRoutine()
-    {
-        spriteRenderer.material = whiteFlashMaterial;
+        public float GetRestoreDefaultMaterialTime()
+        {
+            return restoreDefaultMaterialTime;
+        }
+
+        public void GetFlashEffect()
+        {
+            StartCoroutine(FlashRoutine());
+        }
+
+        private IEnumerator FlashRoutine()
+        {
+            spriteRenderer.material = whiteFlashMaterial;
         
-        yield return new WaitForSeconds(restoreDefaultMaterialTime);
+            yield return new WaitForSeconds(restoreDefaultMaterialTime);
 
-        spriteRenderer.material = defaultMaterial;
+            spriteRenderer.material = defaultMaterial;
+        }
     }
 }

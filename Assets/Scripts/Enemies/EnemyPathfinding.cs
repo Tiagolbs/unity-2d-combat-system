@@ -1,38 +1,39 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Misc;
 using UnityEngine;
 
-public class EnemyPathfinding : MonoBehaviour
+namespace Enemies
 {
-    [SerializeField] private float moveSpeed = 2f;
+    public class EnemyPathfinding : MonoBehaviour
+    {
+        [SerializeField] private float moveSpeed = 2f;
     
-    private Rigidbody2D myRigidbody;
-    private Vector2 moveDirection;
-    private Knockback knockBack;
+        private Rigidbody2D myRigidbody;
+        private Vector2 moveDirection;
+        private Knockback knockBack;
 
-    private void Awake()
-    {
-        myRigidbody = GetComponent<Rigidbody2D>();
-        knockBack = GetComponent<Knockback>();
-    }
-
-    private void FixedUpdate()
-    {
-        Move();
-    }
-
-    private void Move()
-    {
-        if (knockBack.GettingKnockedBack)
+        private void Awake()
         {
-            return;
+            myRigidbody = GetComponent<Rigidbody2D>();
+            knockBack = GetComponent<Knockback>();
         }
-        myRigidbody.MovePosition(myRigidbody.position + moveDirection * (moveSpeed * Time.fixedDeltaTime));
-    }
 
-    public void MoveTo(Vector2 roamingPosition)
-    {
-        moveDirection = roamingPosition;
+        private void FixedUpdate()
+        {
+            Move();
+        }
+
+        private void Move()
+        {
+            if (knockBack.GettingKnockedBack)
+            {
+                return;
+            }
+            myRigidbody.MovePosition(myRigidbody.position + moveDirection * (moveSpeed * Time.fixedDeltaTime));
+        }
+
+        public void MoveTo(Vector2 roamingPosition)
+        {
+            moveDirection = roamingPosition;
+        }
     }
 }

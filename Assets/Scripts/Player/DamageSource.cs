@@ -1,20 +1,21 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Enemies;
 using UnityEngine;
 
-public class DamageSource : MonoBehaviour
+namespace Player
 {
-    [SerializeField] private int damageAmount = 1;
-    
-    private void OnTriggerEnter2D(Collider2D other)
+    public class DamageSource : MonoBehaviour
     {
-        if (!other.gameObject.GetComponent<EnemyHealth>())
+        [SerializeField] private int damageAmount = 1;
+    
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            return;
-        }
+            if (!other.gameObject.GetComponent<EnemyHealth>())
+            {
+                return;
+            }
         
-        EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
-        enemyHealth.TakeDamage(damageAmount);
+            EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
+            enemyHealth.TakeDamage(damageAmount);
+        }
     }
 }

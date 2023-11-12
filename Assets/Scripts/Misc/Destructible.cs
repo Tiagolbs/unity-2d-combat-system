@@ -1,21 +1,21 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
+using Player;
 using UnityEngine;
 
-public class Destructible : MonoBehaviour
+namespace Misc
 {
-    [SerializeField] private GameObject destroyVFX;
-
-    private void OnTriggerEnter2D(Collider2D other)
+    public class Destructible : MonoBehaviour
     {
-        if (!other.gameObject.GetComponent<DamageSource>())
+        [SerializeField] private GameObject destroyVFX;
+
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            return;
-        }
+            if (!other.gameObject.GetComponent<DamageSource>())
+            {
+                return;
+            }
         
-        Instantiate(destroyVFX, transform.position, Quaternion.identity);
-        Destroy(gameObject);
+            Instantiate(destroyVFX, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
     }
 }

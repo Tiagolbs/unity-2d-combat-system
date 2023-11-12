@@ -1,17 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ActiveWeapon : MonoBehaviour
+namespace Player
 {
-
-    private void Start()
+    public class ActiveWeapon : MonoBehaviour
     {
-        
-    }
 
-    private void Update()
-    {
+        private void Start()
+        {
         
+        }
+
+        private void Update()
+        {
+        
+        }
     }
 }
