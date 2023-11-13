@@ -17,6 +17,7 @@ namespace Scene_Management
             
             PlayerController.Instance.transform.position = this.transform.position;
             CameraController.Instance.SetPlayerCameraFollow();
+            UIFade.Instance.FadeToClear();
         }
     }
 }
