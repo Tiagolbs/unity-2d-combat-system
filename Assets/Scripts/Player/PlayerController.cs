@@ -11,8 +11,9 @@ namespace Player
         [SerializeField] private float dashTime = 0.2f;
         [SerializeField] private float dashCooldown = 2f;
         [SerializeField] private TrailRenderer trailRenderer;
-
-        private PlayerControls playerControls;
+        [SerializeField] private Transform weaponCollider;
+        [SerializeField] private Transform slashAnimationSpawnPoint;
+        
         private Vector2 movement;
         private Rigidbody2D myRigidbody;
         private Animator myAnimator;
@@ -24,11 +25,12 @@ namespace Player
         private static readonly int MoveY = Animator.StringToHash("moveY");
     
         public bool FacingLeft { get; private set; } = false;
+        public PlayerControls PlayerControls { get; private set; }
 
         protected override void Awake()
         {
             base.Awake();
-            playerControls = new PlayerControls();
+            PlayerControls = new PlayerControls();
             myRigidbody = GetComponent<Rigidbody2D>();
             myAnimator = GetComponent<Animator>();
             mySpriteRenderer = GetComponent<SpriteRenderer>();
@@ -36,13 +38,13 @@ namespace Player
 
         private void Start()
         {
-            playerControls.Combat.Dash.performed += _ => Dash();
+            PlayerControls.Combat.Dash.performed += _ => Dash();
             startingMoveSpeed = moveSpeed;
         }
 
         private void OnEnable()
         {
-            playerControls.Enable();
+            PlayerControls.Enable();
         }
 
         private void Update()
@@ -56,9 +58,19 @@ namespace Player
             Move();
         }
 
+        public Transform GetWeaponCollider()
+        {
+            return weaponCollider;
+        }
+        
+        public Transform GetSlashAnimationSpawnPoint()
+        {
+            return slashAnimationSpawnPoint;
+        }
+
         private void PlayerInput()
         {
-            movement = playerControls.Movement.Move.ReadValue<Vector2>();
+            movement = PlayerControls.Movement.Move.ReadValue<Vector2>();
         
             myAnimator.SetFloat(MoveX, movement.x);
             myAnimator.SetFloat(MoveY, movement.y);
@@ -71,7 +83,7 @@ namespace Player
 
         private void AdjustPlayerFacingDirection()
         {
-            Vector2 mousePosition = playerControls.Movement.MousePosition.ReadValue<Vector2>();
+            Vector2 mousePosition = PlayerControls.Movement.MousePosition.ReadValue<Vector2>();
             Vector3 playerScreenPoint = Camera.main.WorldToScreenPoint(transform.position);
 
             if (mousePosition.x < playerScreenPoint.x)
