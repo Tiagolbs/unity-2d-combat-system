@@ -76,7 +76,7 @@ namespace Player
 
         private void Attack()
         {
-            if (!attackButtonDown || isAttacking)
+            if (!attackButtonDown || isAttacking || !CurrentActiveWeapon)
             {
                 return;
             }
