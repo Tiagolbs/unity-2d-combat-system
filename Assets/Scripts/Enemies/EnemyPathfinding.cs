@@ -10,11 +10,13 @@ namespace Enemies
         private Rigidbody2D myRigidbody;
         private Vector2 moveDirection;
         private Knockback knockBack;
+        private SpriteRenderer mySpriteRenderer;
 
         private void Awake()
         {
             myRigidbody = GetComponent<Rigidbody2D>();
             knockBack = GetComponent<Knockback>();
+            mySpriteRenderer = GetComponent<SpriteRenderer>();
         }
 
         private void FixedUpdate()
@@ -29,6 +31,8 @@ namespace Enemies
                 return;
             }
             myRigidbody.MovePosition(myRigidbody.position + moveDirection * (moveSpeed * Time.fixedDeltaTime));
+
+            mySpriteRenderer.flipX = moveDirection.x < 0;
         }
 
         public void MoveTo(Vector2 roamingPosition)
