@@ -1390,11 +1390,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c3c5f6d3a9d9a04d844ba0f239a6642, type: 3}
---- !u!1 &346572778 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8378292251996366347, guid: 8b370872fe02ca24aa61555733b5133e, type: 3}
-  m_PrefabInstance: {fileID: 2002114575}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &347836921 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9124728745210303178, guid: 2c3c5f6d3a9d9a04d844ba0f239a6642, type: 3}
@@ -42172,27 +42167,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1761728134585553777, guid: 8b370872fe02ca24aa61555733b5133e, type: 3}
   m_PrefabInstance: {fileID: 2002114575}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &1718495720
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 346572778}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fef8ad42fff85d04b844badd375c8cf9, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &1743846352 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1761728134585553777, guid: 8b370872fe02ca24aa61555733b5133e, type: 3}
@@ -65276,10 +65250,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8378292251996366347, guid: 8b370872fe02ca24aa61555733b5133e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1718495720}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b370872fe02ca24aa61555733b5133e, type: 3}
 --- !u!4 &2016006860 stripped
 Transform:
