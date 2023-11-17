@@ -52,7 +52,7 @@ namespace Inventory
                 Destroy(ActiveWeapon.Instance.CurrentActiveWeapon.gameObject);
             }
 
-            if (!transform.GetChild(activeSlotIndexNum).GetComponent<InventorySlot>())
+            if (transform.GetChild(activeSlotIndexNum).GetComponent<InventorySlot>().GetWeaponInfo() == null)
             {
                 ActiveWeapon.Instance.WeaponNull();
                 return;
