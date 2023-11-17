@@ -1,13 +1,12 @@
-using System;
-using System.Collections;
+using Player;
 using UnityEngine;
 
-namespace Player
+namespace Inventory
 {
     public class Sword : MonoBehaviour, IWeapon
     {
         [SerializeField] private GameObject slashAnimationPrefab;
-        [SerializeField] private float attackCooldown = 0.5f;
+        [SerializeField] private WeaponInfo weaponInfo;
     
         private Animator myAnimator;
         private GameObject slashAnimation;
@@ -30,6 +29,11 @@ namespace Player
         private void Update()
         {
             MouseFollowWithOffset();
+        }
+
+        public WeaponInfo GetWeaponInfo()
+        {
+            return weaponInfo;
         }
 
         public void DoneAttackingAnimationEvent()
@@ -63,13 +67,6 @@ namespace Player
             weaponCollider.gameObject.SetActive(true);
             slashAnimation = Instantiate(slashAnimationPrefab, slashAnimationSpawnPoint.position, Quaternion.identity);
             slashAnimation.transform.parent = this.transform.parent;
-            StartCoroutine(AttackCooldownRoutine());
-        }
-
-        private IEnumerator AttackCooldownRoutine()
-        {
-            yield return new WaitForSeconds(attackCooldown);
-            ActiveWeapon.Instance.ToggleIsAttacking(false);
         }
 
         private void MouseFollowWithOffset()

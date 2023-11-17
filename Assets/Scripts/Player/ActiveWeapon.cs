@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using Inventory;
 using Scene_Management;
 using UnityEngine;
 
@@ -11,6 +13,7 @@ namespace Player
         private PlayerControls playerControls;
         private bool attackButtonDown = false;
         private bool isAttacking = false;
+        private float timeBetweenAttacks;
 
         protected override void Awake()
         {
@@ -27,6 +30,8 @@ namespace Player
         {
             playerControls.Combat.Attack.started += _ => StartAttacking();
             playerControls.Combat.Attack.canceled += _ => StopAttacking();
+            
+            AttackCooldown();
         }
 
         private void Update()
@@ -37,6 +42,8 @@ namespace Player
         public void NewWeapon(MonoBehaviour newWeapon)
         {
             CurrentActiveWeapon = newWeapon;
+            AttackCooldown();
+            timeBetweenAttacks = (CurrentActiveWeapon as IWeapon).GetWeaponInfo().weaponCooldown;
         }
 
         public void WeaponNull()
@@ -44,9 +51,17 @@ namespace Player
             CurrentActiveWeapon = null;
         }
 
-        public void ToggleIsAttacking(bool value)
+        private void AttackCooldown()
         {
-            isAttacking = value;
+            isAttacking = true;
+            StopAllCoroutines();
+            StartCoroutine(TimeBetweenAttackRoutine());
+        }
+
+        private IEnumerator TimeBetweenAttackRoutine()
+        {
+            yield return new WaitForSeconds(timeBetweenAttacks);
+            isAttacking = false;
         }
 
         private void StartAttacking()
@@ -65,8 +80,7 @@ namespace Player
             {
                 return;
             }
-            
-            isAttacking = true;
+            AttackCooldown();
             (CurrentActiveWeapon as IWeapon).Attack();
 
         }

@@ -1,17 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using Cinemachine;
 using Player;
-using Scene_Management;
-using UnityEngine;
 
-public class CameraController : Singleton<CameraController>
+namespace Scene_Management
 {
-    private CinemachineVirtualCamera cinemachineVirtualCamera;
-    
-    public void SetPlayerCameraFollow()
+    public class CameraController : Singleton<CameraController>
     {
-        cinemachineVirtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
-        cinemachineVirtualCamera.Follow = PlayerController.Instance.transform;
+        private CinemachineVirtualCamera cinemachineVirtualCamera;
+    
+        public void SetPlayerCameraFollow()
+        {
+            cinemachineVirtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
+            cinemachineVirtualCamera.Follow = PlayerController.Instance.transform;
+        }
     }
 }

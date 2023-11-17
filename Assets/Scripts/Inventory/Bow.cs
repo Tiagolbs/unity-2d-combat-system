@@ -1,13 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
 using Player;
 using UnityEngine;
 
-public class Bow : MonoBehaviour, IWeapon
+namespace Inventory
 {
-    public void Attack()
+    public class Bow : MonoBehaviour, IWeapon
     {
-        Debug.Log("Bow Attack");
-        ActiveWeapon.Instance.ToggleIsAttacking(false);
+        [SerializeField] private WeaponInfo weaponInfo;
+        [SerializeField] private GameObject arrowPrefab;
+        [SerializeField] private Transform arrowSpawnPoint;
+
+        private Animator myAnimator;
+        private static readonly int Fire = Animator.StringToHash("Fire");
+
+        private void Awake()
+        {
+            myAnimator = GetComponent<Animator>();
+        }
+
+        public void Attack()
+        {
+            myAnimator.SetTrigger(Fire);
+            GameObject newArrow =
+                Instantiate(arrowPrefab, arrowSpawnPoint.position, ActiveWeapon.Instance.transform.rotation);
+        
+            newArrow.GetComponent<Projectile>().UpdateWeaponInfo(weaponInfo);
+        }
+    
+        public WeaponInfo GetWeaponInfo()
+        {
+            return weaponInfo;
+        }
     }
 }

@@ -1,13 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class InventorySlot : MonoBehaviour
+namespace Inventory
 {
-    [SerializeField] private WeaponInfo weaponInfo;
-
-    public WeaponInfo GetWeaponInfo()
+    public class InventorySlot : MonoBehaviour
     {
-        return weaponInfo;
+        [SerializeField] private WeaponInfo weaponInfo;
+
+        public WeaponInfo GetWeaponInfo()
+        {
+            return weaponInfo;
+        }
     }
 }

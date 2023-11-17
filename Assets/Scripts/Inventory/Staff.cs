@@ -1,35 +1,60 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Player;
 using UnityEngine;
 
-public class Staff : MonoBehaviour, IWeapon
+namespace Inventory
 {
-    public void Update()
+    public class Staff : MonoBehaviour, IWeapon
     {
-        MouseFollowWithOffset();
-    }
+        [SerializeField] private WeaponInfo weaponInfo;
+        [SerializeField] private GameObject magicLaserPrefab;
+        [SerializeField] private Transform magicLaserSpawnFound;
 
-    public void Attack()
-    {
-        ActiveWeapon.Instance.ToggleIsAttacking(false);
-    }
-    
-    private void MouseFollowWithOffset()
-    {
-        Vector2 mousePosition = PlayerController.Instance.PlayerControls.Movement.MousePosition.ReadValue<Vector2>();
-        Vector3 playerScreenPoint = Camera.main.WorldToScreenPoint(PlayerController.Instance.transform.position);
+        private Animator myAnimator;
+        private static readonly int Fire = Animator.StringToHash("Fire");
 
-        float angle = Mathf.Atan2(mousePosition.y, mousePosition.x) * Mathf.Rad2Deg;
-
-        if (mousePosition.x < playerScreenPoint.x)
+        private void Awake()
         {
-            ActiveWeapon.Instance.transform.rotation = Quaternion.Euler(0, -180, angle);
+            myAnimator = GetComponent<Animator>();
         }
-        else
+
+        public void Update()
         {
-            ActiveWeapon.Instance.transform.rotation = Quaternion.Euler(0, 0, angle);
+            MouseFollowWithOffset();
+        }
+
+        public void Attack()
+        {
+            myAnimator.SetTrigger(Fire);
+        }
+
+        public void SpawnStaffProjectileAnimationEvent()
+        {
+            GameObject newMagicLaser =
+                Instantiate(magicLaserPrefab, magicLaserSpawnFound.position, ActiveWeapon.Instance.transform.rotation);
+            
+            newMagicLaser.GetComponent<MagicLaser>().UpdateLaserRange(weaponInfo.weaponRange);
+        }
+    
+        public WeaponInfo GetWeaponInfo()
+        {
+            return weaponInfo;
+        }
+    
+        private void MouseFollowWithOffset()
+        {
+            Vector2 mousePosition = PlayerController.Instance.PlayerControls.Movement.MousePosition.ReadValue<Vector2>();
+            Vector3 playerScreenPoint = Camera.main.WorldToScreenPoint(PlayerController.Instance.transform.position);
+
+            float angle = Mathf.Atan2(mousePosition.y, mousePosition.x) * Mathf.Rad2Deg;
+
+            if (mousePosition.x < playerScreenPoint.x)
+            {
+                ActiveWeapon.Instance.transform.rotation = Quaternion.Euler(0, -180, angle);
+            }
+            else
+            {
+                ActiveWeapon.Instance.transform.rotation = Quaternion.Euler(0, 0, angle);
+            }
         }
     }
 }

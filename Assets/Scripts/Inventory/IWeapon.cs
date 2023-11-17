@@ -1,4 +1,8 @@
-interface IWeapon
+namespace Inventory
 {
-    public void Attack();
+    interface IWeapon
+    {
+        public void Attack();
+        public WeaponInfo GetWeaponInfo();
+    }
 }
