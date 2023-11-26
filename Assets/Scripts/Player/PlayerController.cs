@@ -1,4 +1,5 @@
 using System.Collections;
+using Misc;
 using Scene_Management;
 using UnityEngine;
 
@@ -20,6 +21,7 @@ namespace Player
         private SpriteRenderer mySpriteRenderer;
         private bool isDashing = false;
         private float startingMoveSpeed;
+        private Knockback knockback;
 
         private static readonly int MoveX = Animator.StringToHash("moveX");
         private static readonly int MoveY = Animator.StringToHash("moveY");
@@ -34,6 +36,7 @@ namespace Player
             myRigidbody = GetComponent<Rigidbody2D>();
             myAnimator = GetComponent<Animator>();
             mySpriteRenderer = GetComponent<SpriteRenderer>();
+            knockback = GetComponent<Knockback>();
         }
 
         private void Start()
@@ -78,6 +81,11 @@ namespace Player
 
         private void Move()
         {
+            if (knockback.GettingKnockedBack)
+            {
+                return;
+            }
+            
             myRigidbody.MovePosition(myRigidbody.position + movement * (moveSpeed * Time.fixedDeltaTime));
         }
 
